@@ -1,5 +1,5 @@
 ##wallpaper
-output * bg /home/stuppeddu/Immagini/Wallhaven.png fill
+output * bg /home/user/Wallpapers/Wallhaven.png fill
 
 #color palette
 set $bg #1e1e2e
