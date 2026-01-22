@@ -1,47 +1,99 @@
+@keyframes bar-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
 * {
-	font-family: JetBrainsMono Nerd Font;
-	font-size: 12px;
-	border: none;
-	border-radius: 0;
+  font-family: JetBrainsMono Nerd Font;
+  font-size: 12px;
+  border: none;
+  border-radius: 0;
 }
 
-window#waybar {
-	background-color: rgba(30, 30, 46, 0.80);
-	color: #cdd6f4;
-
-	margin: 10px 14px 0 14px;
-	border-radius: 16px;
-	border: 1px solid rgba(255, 255, 255, 0.08);
+#waybar {
+   padding: 2px 0;
+   background: transparent;
+   animation: bar-in 250ms ease-out;
 }
 
-#workspaces,
-#clock,
-#battery,
-#pulseaudio {
-	background: transparent;
+#waybar button,
+#waybar label {
+	transition: opacity 120ms ease;
 }
 
+#waybar button:hover {
+	margin-top: -1px;
+}
+
+#waybar button {
+	transition: margin-top 120ms ease;
+}
+
+#waybar label:hover {
+	opacity: 0.85;
+}
+
+/* Workspaces */
 #workspaces {
-	margin-left: 6px;
+  margin-left: 6px;
 }
 
 #workspaces button {
-	padding: 0 6px;
-	margin: 0 2px;
-	background: transparent;
-	color: #cdd6f4;
-	border-bottom: 2px solid transparent;
+  padding: 4px 8px;
+  margin: 0 2px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  border-bottom: 2px solid transparent;
+  border-radius: 8px;
+  transition: opacity 120ms ease;
+  opacity: 0.5;
 }
 
 #workspaces button.focused {
-	border-bottom: 2px solid #89b4fa;
-	color: #89b4fa;
+  color: #ffffff;
+  font-weight: bold;
+  opacity: 1;
+}
+
+#workspaces button:not(.focused) {
+	opacity: 0.6;
 }
 
 #workspaces button.urgent {
-	color: #f38ba8;
+  color: #f38ba8;
 }
 
-#clock, #battery, #cpu, #memory, #pulseaudio {
-	padding: 0 8px;
+/* Modules */
+#custom-wallpaper
+#network,
+#battery,
+#cpu,
+#memory,
+#pulseaudio,
+#custom-power {
+  padding: 0 5px;
+  margin: 0 4px;
+  border-radius: 10px;
+  background: transparent;
+  transition: background 0.2s ease;
 }
+
+#custom-wallpaper:hover,
+#network:hover,
+#battery:hover,
+#cpu:hover,
+#memory:hover,
+#pulseaudio:hover {
+  background: rgba(49, 50, 68, 0.8);
+}
+
+/* Power button */
+#custom-power:hover {
+  background: rgba(243, 139, 168, 0.8);
+  color: #1e1e2e;
+}
+

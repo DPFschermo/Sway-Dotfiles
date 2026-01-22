@@ -1,4 +1,9 @@
 window {
 	background-color: #1e1e2e;
-	color: #cdd6f4
+	color: #cdd6f4;
+	border-radius: 12px;
+}
+
+#entry:selected {
+	background-color: #89b4fa;
 }

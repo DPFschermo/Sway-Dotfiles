@@ -1,44 +1,67 @@
 {
-	"layer": "top",
-	"position": "top",
-	"height": 32,
-	"hide_on_fullscreen": true,
-	"modules-left": ["sway/workspaces"],
-	"modules-center": ["clock"],
-	"modules-right": ["battery", "cpu", "memory", "pulseaudio"],
+  "layer": "top",
+  "position": "top",
+  "height": 36,
+  "hide_on_fullscreen": true,
 
-	"clock": {
-		"format": "{:%H:%M}"
-	},
+  "modules-left": ["sway/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["network", "battery", "cpu", "memory", "pulseaudio","custom/wallpaper", "custom/power"],
 
-        "pulseaudio": {
-		"format": "  {volume}%",
-		"format-muted": "  muted",
-		"on-click": "pavucontrol",
-		"on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
-		"on-scroll-down": "pactl set-sink-volume @DEAFULT_SINK@ -5%",
-		"on-click-right": "pactl set-sink-volume @DEFAULT_SINK@ toggle"
-        },
+  "clock": {
+    "format": "{:%H:%M}"
+  },
 
-	"cpu": {
-		"format": "  {usage}%",
-                "interval": 5
-	},
+  "pulseaudio": {
+    "format": "  {volume}%",
+    "format-muted": "  muted",
+    "on-click": "pavucontrol",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+  },
 
-	"battery": {
-		"format": "󱊣 {capacity}%",
-        	"format-charging": "󱊤 {capacity}%",
-                "states": {
-			"warning": 30,
-			"critical": 15
-		},
-		"interval": 30
-	},
-	"memory": {
-		"format": "  {percentage}%",
-		"interval": 5
-	}
+  "cpu": {
+    "format": "  {usage}%",
+    "interval": 3
+  },
+
+  "memory": {
+    "format": "  {percentage}%",
+    "interval": 3
+  },
+
+  "battery": {
+    "format": "󱊣 {capacity}%",
+    "format-charging": "󱊤 {capacity}%",
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "interval": 30
+  },
+
+  "network": {
+    "format-wifi": "󰖩 {signalStrength}%",
+    "format-ethernet": "󰈁 Wired",
+    "format-disconnected": "󰖪 Offline",
+    "tooltip": true,
+    "on-click": "nm-connection-editor"
+  },
+
+  "custom/power": {
+    "format": "󰐥",
+    "tooltip": false,
+    "on-click": "~/.config/sway/scripts/powermenu.sh"
+  },
+  
+  "custom/wallpaper": {
+	  "format": "󰸉 ",
+	  "tooltip": "Change Wallpaper",
+	  "on-click": ".config/sway/scripts/wallpaper-menu.sh"
+  }
 }
+
 
 
 	
