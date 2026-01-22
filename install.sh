@@ -12,41 +12,63 @@ else
 	echo "Cannot detect OS"
 fi
 
+# --------------------------
+# Check internet
+# --------------------------
+
+check_internet() {
+	if ping -c 1 1.1.1.1 >/dev/null 2>&1; then
+		echo "🌐 Internet connection detected"
+	else
+		echo "❌ No internet connection"
+		echo "Please connect to the internet and rerun the script"
+		exit 1
+	fi
+}
+
+check_internet
+
 COMMON_PKGS=(
-	sway
-	waybar
-	wofi
-	foot
-	grim
-	slurp
-	wl-clipboard
+	sway waybar wofi foot
+	grim slurp wl-clipboard
 )
+
+AUDIO_PKGS=()
+NET_PKGS=()
 
 install_packages() {
 	case "$ID" in
 		debian|ubuntu|kali|mint)
+   AUDIO_PKGS=(pipewire wireplumber pipewire-audio)
+   NET_PKGS=(network-manager)
 			echo "using apt"
 			sudo apt update
-			sudo apt install -y "${COMMON_PKGS[@]}"
+			sudo apt install -y "${COMMON_PKGS[@]}" "${AUDIO_PKGS[@]}" "${NET_PKGS[@]}"
 			;;
 
 		arch|manjaro|cachyos|steamos)
+			AUDIO_PKGS=(pipewire pipewire-pulse wireplumber)
+   NET_PKGS=(networkmanager)
 			echo "using pacman"
-			sudo pacman -Sy --needed "${COMMON_PKGS[@]}"
+			sudo pacman -Sy --needed "${COMMON_PKGS[@]}" "${AUDIO_PKGS[@]}" "${NET_PKGS[@]}"
 			;;
 		
 		void)
-		 echo "using xbps"
-		 sudo xbps-install -Sy "${COMMON_PKGS[@]}"
+			AUDIO_PKGS=(pipewire pipewire-pulse wireplumber)
+   NET_PKGS=(NetworkManager)
+			echo "using xbps"
+		 sudo xbps-install -Sy "${COMMON_PKGS[@]}" "${AUDIO_PKGS[@]}" "${NET_PKGS[@]}"
 			;;
 
 		gentoo)
-			echo "Detected Gentoo"
-			echo "Installing packages via emerge (this may take time)"
-			sudo emerge --ask \
-				sway waybar wofi foot \
-				grim slurp wl-clipboard
-			;;
+	echo "Detected Gentoo"
+	echo "Installing packages via emerge (this may take time)"
+	sudo emerge --ask \
+		sway waybar wofi foot \
+		grim slurp wl-clipboard \
+		pipewire wireplumber \
+		networkmanager
+	;;
 
 		*)
 			echo "Unsupported distro: $ID"
@@ -55,9 +77,37 @@ install_packages() {
 			;;
 	esac
 }
+
+if ! command -v nmcli >/dev/null; then
+	echo "NetworkManager not detected, installing it"
+else
+	echo "NetworkManager already installed"
+fi
 		       	
 echo "installing dependencies..."
 install_packages
+
+enable_services() {
+	case "$ID" in
+		debian|ubuntu|kali|mint|arch|manjaro|cachyos|steamos)
+			echo "Enabling services (systemd)"
+			sudo systemctl enable NetworkManager
+			systemctl --user enable pipewire wireplumber || true
+			;;
+
+		void)
+			echo "Enabling services (runit)"
+			sudo ln -sf /etc/sv/NetworkManager /var/service
+			;;
+
+		gentoo)
+			echo "Enabling services (OpenRC)"
+			sudo rc-update add NetworkManager default
+			;;
+	esac
+}
+
+enable_services
 
 # ---------------------------------------
 # Check required programs
@@ -76,7 +126,7 @@ check wofi
 check foot
 check waybar
 
-[ "missing" -eq 1 ] && echo "some dependencies are missing"
+[ "$missing" -eq 1 ] && echo "some dependencies are missing"
 
 # --------------------------------------
 # Paths
