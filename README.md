@@ -1,6 +1,6 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-Never ending project, made from a "begginer", feel free to give me advices
+Never ending project, feel free to give me advices
 
 Minimal, clean and GPU-friendly Sway dotfiles with Waybar, Wofi, PipeWire, and a custom install script that works across multiple Linux distributions.
 
