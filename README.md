@@ -124,5 +124,3 @@ Credits
 Created by DPFschermo
 
 ⸻
-
-MIT License 
