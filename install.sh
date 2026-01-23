@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+```bash
+echo "⚠️ After installation, log out and select 'Sway' from your login manager."
+
 set -e
 
 # ----------------------------------------
