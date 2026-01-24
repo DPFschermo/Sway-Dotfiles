@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-```bash
 echo "⚠️ After installation, log out and select 'Sway' from your login manager."
 
 set -e
@@ -32,7 +31,7 @@ check_internet() {
 check_internet
 
 COMMON_PKGS=(
-	sway waybar wofi foot
+	sway Waybar wofi foot
 	grim slurp wl-clipboard
 )
 
@@ -57,7 +56,7 @@ install_packages() {
 			;;
 		
 		void)
-			AUDIO_PKGS=(pipewire pipewire-pulse wireplumber)
+			AUDIO_PKGS=(pipewire wireplumber)
    NET_PKGS=(NetworkManager)
 			echo "using xbps"
 		 sudo xbps-install -Sy "${COMMON_PKGS[@]}" "${AUDIO_PKGS[@]}" "${NET_PKGS[@]}"
