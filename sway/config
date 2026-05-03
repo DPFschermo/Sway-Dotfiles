@@ -63,7 +63,7 @@ set $up k
 set $right l
 set $term foot
 set $menu wmenu-run
-exec_always waybar
+exec_always pkill waybar; waybar
 include /etc/sway/config-vars.d/*
 
 
@@ -233,7 +233,8 @@ bindsym $mod+r mode "resize"
     bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
     # Special key to take a screenshot with grim
-    bindsym Print exec grim
+    bindsym Print exec grim -g "$(slurp)" - | tee ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png | wl-copy
+    bindsym Shift+Print exec grim - | tee ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png | wl-copy
 
 
 include /etc/sway/config.d/*
